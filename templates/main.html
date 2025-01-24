@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-4 mb-4">
+        <div class="card" style="width: 18rem;">
+            <img src="{{ url_for('static', filename=product.img) }}" class="card-img-top" alt="{{ product.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.price }}%</p>
+                <a href="{{ product.link }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">გაიგე მეტი</a>
+                {% if current_user.is_authenticated and current_user.role == "Admin" %}
+                <a href="/edit_product/{{ product.id }}" class="btn btn-warning">Edit</a>
+                <a href="/delete_product/{{ product.id }}" class="btn btn-danger">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
